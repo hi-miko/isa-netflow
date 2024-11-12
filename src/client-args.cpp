@@ -1,8 +1,11 @@
 // Patrik Uher
 // xuherp02
 
+#include <cstdint>
 #include <iostream>
 #include <getopt.h>
+#include <string.h>
+#include <stdexcept>
 #include "client-args.hpp"
 
 using ca = ClientArgs;
@@ -32,8 +35,8 @@ void help_menu()
     std::cout << "\nFlags:" << std::endl;
     std::cout << "\t[--help] -> Displays this help message and exits" << std::endl;
     std::cout << "\t[--version | -v] -> Displays the version of this program and exits" << std::endl;
-    std::cout << "\t[-a <active timeout>] -> number of seconds for the active timeout of the netflow V5 exporter (default 60 seconds)" << std::endl;
-    std::cout << "\t[-i <inactive timeout>] -> number of seconds for the inactive timeout of the netflow V5 exporter (default 60 seconds)" << std::endl;
+    std::cout << "\t[-a | --active <active timeout>] -> number of seconds for the active timeout of the netflow V5 exporter (default 60 seconds)" << std::endl;
+    std::cout << "\t[-i | --inactive <inactive timeout>] -> number of seconds for the inactive timeout of the netflow V5 exporter (default 60 seconds)" << std::endl;
 }
 
 /** A function that checks if the argument is a valid number.
@@ -83,6 +86,37 @@ void ca::valid_port(std::string port)
     ca::port = new_port;
 }
 
+int32_t ca::valid_timeout(std::string timeout)
+{
+    long temp_conv;
+
+    try
+    {
+        temp_conv = stol(timeout);
+        std::cout << "trying: " << temp_conv << " < " << INT32_MIN << std::endl;
+        std::cout << "trying: " << temp_conv << " > " << INT32_MAX << std::endl;
+        if(temp_conv < INT32_MIN or temp_conv > INT32_MAX)
+        {
+            throw std::out_of_range("Argument out of range of 32 signed bits");
+        }
+    }
+    catch(std::out_of_range& e)
+    {
+        if(strcmp(e.what(), "stol") == 0)
+        {
+            std::cout << "Argument out of range of 32 signed bits" << std::endl;
+        }
+        else
+        {
+            std::cout << "Error: " << e.what() << std::endl;
+        }
+
+        exit(1);
+    }
+
+    return static_cast<int32_t>(temp_conv);
+}
+
 /** A function that checks the arguments and saves the results into an array
 */
 void ca::check_args(int argc, char **argv)
@@ -93,19 +127,30 @@ void ca::check_args(int argc, char **argv)
 	{
 		{"version", no_argument, NULL, 'v'},
 		{"help", no_argument, NULL, 'h'},
+        {"active", required_argument, NULL, 'a'},
+        {"inactive", required_argument, NULL, 'i'},
 		{0,0,0,0} //last element of the array has to be filled with 0s as per man 3 getopts
 	};
 
 	int index;
 	int opt;
+    int argcnt = 0;
 
 	//turn off getopt error message
 	opterr=1;
 
-	while((opt = getopt_long(argc, argv, ":vh", longopts, &index)) != -1)
+	while((opt = getopt_long(argc, argv, ":vha:i:", longopts, &index)) != -1)
 	{
 		switch(opt)
 		{
+            case 'a':
+                ca::active_timeout = ca::valid_timeout(optarg);
+                argcnt++;
+                break;
+            case 'i':
+                ca::inactive_timeout = ca::valid_timeout(optarg);
+                argcnt++;
+                break;
 			case 'v':
 				cout << argv[0] << " " << VERSION << endl;
 				exit(0);
@@ -129,21 +174,40 @@ void ca::check_args(int argc, char **argv)
 				exit(1);
 		}
 	}
-
-    //TODO check if you can somehow switch the positional arguments, but seemingly from its position you shouldn't
-    if(argc != 3)
+    
+    // every flag counts as 2 arguments cause both flags have a mandatory argument
+    // and 3 because the 2 positional arguments are also mandatory and with the name of the program, thats 3
+    if(argc-(argcnt*2) != 3)
     {
-        //TODO switch cout to cerr
-        cout << "Error: wrong amount of arguments" << endl;
-        cout << "see ./p2nprobe --help" << endl;
+        cerr << "Error: wrong amount of arguments" << endl;
+        cerr << "see ./p2nprobe --help" << endl;
         exit(1);
     }
-    
-    // -1 cause of 0 indexing
-    string pcap_file = argv[argc-1];
 
-    // -1 cause of 0 indexing and -1 because its the first argument
-    string host_and_port = argv[argc-2];
+    for(int i = 0; i < argc; i++)
+    {
+        cout << "arg " << i << " : " << argv[i] << endl;
+    }
+    
+    string host_and_port;
+    string pcap_file;
+        
+    // -1 cause of 0 indexing
+    // arguments not part of flags are at the end of argv
+    if(ca::is_host_and_port(argv[argc-1]))
+    {
+        host_and_port = argv[argc-1];
+        pcap_file = argv[argc-2];
+    }
+    else
+    {
+        host_and_port = argv[argc-2];
+        pcap_file = argv[argc-1];
+    }
+
+    cout << "host & port: " << host_and_port << endl;
+    cout << "pcap file: " << pcap_file << endl;
+
     string delimitor = ":";
 
     string hostname = host_and_port.substr(0, host_and_port.find(delimitor));
@@ -155,6 +219,17 @@ void ca::check_args(int argc, char **argv)
     ca::valid_port(port);
 }
 
+bool ca::is_host_and_port(std::string arg)
+{
+    // looks through the string for the ':' character
+    if(arg.find(':') == std::string::npos)
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void ca::print_args()
 {
     using namespace std;
@@ -164,4 +239,6 @@ void ca::print_args()
     cout << "port: " << ca::port << endl;
     cout << "active timeout: " << ca::active_timeout << endl;
     cout << "inactive timeout: " << ca::inactive_timeout << endl;
+
+    exit(0);
 }
