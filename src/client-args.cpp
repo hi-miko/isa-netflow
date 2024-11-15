@@ -7,11 +7,19 @@
 #include <string.h>
 #include <stdexcept>
 #include "client-args.hpp"
+#include "debug-info.hpp"
+
+// Number of arguments that the program can have discounting the flags
+#define MAX_NOFLAG_ARG_COUNT 3
 
 using ca = ClientArgs;
 
 ca::ClientArgs()
 {
+    // needs to be one of the first things that happen in code
+    auto now = std::chrono::system_clock::now();
+    ca::epoch = now.time_since_epoch();
+
     ca::hostname = "";
     ca::pcap_file_path = "";
     ca::port = -1;
@@ -19,7 +27,7 @@ ca::ClientArgs()
     ca::inactive_timeout = 60;
 }
 
-const float VERSION = 0.1;
+const float VERSION = 0.2;
 
 /** A function that prints out a help menu.
 */
@@ -93,8 +101,6 @@ int32_t ca::valid_timeout(std::string timeout)
     try
     {
         temp_conv = stol(timeout);
-        std::cout << "trying: " << temp_conv << " < " << INT32_MIN << std::endl;
-        std::cout << "trying: " << temp_conv << " > " << INT32_MAX << std::endl;
         if(temp_conv < INT32_MIN or temp_conv > INT32_MAX)
         {
             throw std::out_of_range("Argument out of range of 32 signed bits");
@@ -129,27 +135,35 @@ void ca::check_args(int argc, char **argv)
 		{"help", no_argument, NULL, 'h'},
         {"active", required_argument, NULL, 'a'},
         {"inactive", required_argument, NULL, 'i'},
+        {"debug", no_argument, NULL, 'd'},
 		{0,0,0,0} //last element of the array has to be filled with 0s as per man 3 getopts
 	};
 
 	int index;
 	int opt;
-    int argcnt = 0;
+    // counts the number of flags without arguments
+    int flagCnt = 0;
+    // counts the number of flags with arguments
+    int flagArgCnt = 0;
 
 	//turn off getopt error message
 	opterr=1;
 
-	while((opt = getopt_long(argc, argv, ":vha:i:", longopts, &index)) != -1)
+	while((opt = getopt_long(argc, argv, ":vha:i:d", longopts, &index)) != -1)
 	{
 		switch(opt)
 		{
+            case 'd':
+                set_debug(true);
+                flagCnt++;
+                break;
             case 'a':
                 ca::active_timeout = ca::valid_timeout(optarg);
-                argcnt++;
+                flagArgCnt++;
                 break;
             case 'i':
                 ca::inactive_timeout = ca::valid_timeout(optarg);
-                argcnt++;
+                flagArgCnt++;
                 break;
 			case 'v':
 				cout << argv[0] << " " << VERSION << endl;
@@ -158,37 +172,31 @@ void ca::check_args(int argc, char **argv)
                 help_menu();
                 exit(0);
 			case '?':
-				cout << "Error: wrong usage, unknown option" << endl;
-				cout << "see ./p2nprobe --help" << endl;
+				cerr << "Error: wrong usage, unknown option" << endl;
+				cerr << "see ./p2nprobe --help" << endl;
 				exit(1);
 			case ':':
-				cout << "Error: wrong usage, missing parameters" << endl;
-				cout << "see ./p2nprobe --help" << endl;
+				cerr << "Error: wrong usage, missing parameters" << endl;
+				cerr << "see ./p2nprobe --help" << endl;
 				exit(1);
 			case 0:
 				// is returned when getopt_long has a variable address
 				continue;
 			default:
-				cout << "Error: wrong usage, unknown option" << endl;
-				cout << "see ./p2nprobe --help" << endl;
+				cerr << "Error: wrong usage, unknown option" << endl;
+				cerr << "see ./p2nprobe --help" << endl;
 				exit(1);
 		}
 	}
     
-    // every flag counts as 2 arguments cause both flags have a mandatory argument
-    // and 3 because the 2 positional arguments are also mandatory and with the name of the program, thats 3
-    if(argc-(argcnt*2) != 3)
+    // flags with arguments count as 2 arguments and flags without only as 1
+    if((argc - ((flagArgCnt * 2) + flagCnt)) != MAX_NOFLAG_ARG_COUNT)
     {
         cerr << "Error: wrong amount of arguments" << endl;
         cerr << "see ./p2nprobe --help" << endl;
         exit(1);
     }
 
-    for(int i = 0; i < argc; i++)
-    {
-        cout << "arg " << i << " : " << argv[i] << endl;
-    }
-    
     string host_and_port;
     string pcap_file;
         
@@ -205,9 +213,6 @@ void ca::check_args(int argc, char **argv)
         pcap_file = argv[argc-1];
     }
 
-    cout << "host & port: " << host_and_port << endl;
-    cout << "pcap file: " << pcap_file << endl;
-
     string delimitor = ":";
 
     string hostname = host_and_port.substr(0, host_and_port.find(delimitor));
@@ -217,6 +222,17 @@ void ca::check_args(int argc, char **argv)
     ca::pcap_file_path = pcap_file;
     ca::hostname = hostname;
     ca::valid_port(port);
+    
+    if(debugActive)
+    {
+        cout << "[[ RAW ARGUMENT PRINT ]]" << endl;
+        for(int i = 0; i < argc; i++)
+        {
+            cout << "argv[ " << i << " ]: " << argv[i] << endl;
+        }
+        cout << endl;
+        ca::print_args();
+    }
 }
 
 bool ca::is_host_and_port(std::string arg)
@@ -234,11 +250,11 @@ void ca::print_args()
 {
     using namespace std;
 
+    cout << "[[ CLIENT ARGUMENTS ]]" << endl;
     cout << "hostname: " << ca::hostname << endl;
     cout << "pcap file path: " << ca::pcap_file_path << endl;
     cout << "port: " << ca::port << endl;
     cout << "active timeout: " << ca::active_timeout << endl;
     cout << "inactive timeout: " << ca::inactive_timeout << endl;
-
-    exit(0);
+    cout << endl;
 }

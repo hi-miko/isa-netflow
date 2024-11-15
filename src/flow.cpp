@@ -4,10 +4,14 @@
 #include <netinet/tcp.h>            // for TCP flag macros
 #include <string>
 #include "flow.hpp"
+#include "debug-info.hpp"
 
 Flow::Flow(pack_info *packet)
 {
-    // TODO hopefully I do ntons already here
+    // all values are in host byte order, to print the ip addrs
+    // first you must convert them to network byte order and
+    // then use the inet_ntop() function
+
     Flow::src_ip = packet->src_ip;
     Flow::dst_ip = packet->dst_ip;
 
@@ -25,14 +29,17 @@ Flow::Flow(pack_info *packet)
 
 void Flow::generate_flow_id()
 {
-    // TODO add the tcp protocol if needed, but I don't think I do
     Flow::flow_id = std::to_string(Flow::src_ip); 
     Flow::flow_id.append(std::to_string(Flow::dst_ip));
     Flow::flow_id.append(std::to_string(Flow::src_port));
     Flow::flow_id.append(std::to_string(Flow::dst_port));
 
-    // TODO remove debug prints
-    std::cout << "flow id: " << Flow::flow_id << std::endl;
+    if(debugActive)
+    {
+        std::cout << "[[ FLOW DEBUG FLOW ID ]]" << std::endl;
+        std::cout << "flow id: " << Flow::flow_id << std::endl;
+        std::cout << std::endl;
+    }
 }
 
 tm_status_t Flow::add_packet(pack_info *packet, uint32_t active_timeout, uint32_t inactive_timeout)
@@ -40,15 +47,17 @@ tm_status_t Flow::add_packet(pack_info *packet, uint32_t active_timeout, uint32_
     // TODO there might be some fuckery going on if the packets aren't ordered by timestamps, so that should be fixed (maybe order
     // them myself if thats the case), or maybe do something like if the newest packet isn't newer than last packet and activeTM still
     // is ok then don't set the newest packet as the last packet
+    // addendum: but after some testing this isn't the case and the packets are in sequential order, although I need to differentiate
+    // them by their uS and not by mS
     auto active_diff = abs(Flow::first_packet_time) - abs(Flow::last_packet_time);
-    if((active_diff / 1000) >= active_timeout)
+    if((active_diff / 1000) >= static_cast<int32_t>(active_timeout))
     {
         std::cout << "Flow should be inactivated due to active timeout" << std::endl;
         return INACTIVE;
     }
 
     auto inactive_diff = abs(Flow::last_packet_time) - abs(packet->relative_timestamp);
-    if((inactive_diff / 1000) >= inactive_timeout)
+    if((inactive_diff / 1000) >= static_cast<int32_t>(inactive_timeout))
     {
         std::cout << "Flow should be inactivated due to inactive timeout" << std::endl;
         return INACTIVE;

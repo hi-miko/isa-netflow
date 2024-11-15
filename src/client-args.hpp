@@ -6,6 +6,7 @@
 
 #include <string>
 #include <cstdint>
+#include <chrono>
 
 class ClientArgs
 {
@@ -15,6 +16,7 @@ class ClientArgs
 	int port;
     uint32_t active_timeout;
     uint32_t inactive_timeout;
+    std::chrono::duration<long, std::ratio<1l, 1000000000l>> epoch;
     
     public:
     ClientArgs();

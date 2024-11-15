@@ -1,11 +1,12 @@
 #include <iostream>
 #include "flow-manager.hpp"
+#include "debug-info.hpp"
 
 using fm = FlowManager;
 
 fm::FlowManager()
 {
-
+    
 }
 
 fm::~FlowManager()
@@ -30,12 +31,17 @@ std::string fm::generate_packet_id(pack_info *packet)
     packet_id.append(std::to_string(packet->src_port));
     packet_id.append(std::to_string(packet->dst_port));
 
-    std::cout << "packet id: " << packet_id << std::endl;
+    if(debugActive)
+    {
+        std::cout << "[[ FLOW MANAGER PACKET ID ]]" << std::endl;
+        std::cout << "packet id: " << packet_id << std::endl;
+        std::cout << std::endl;
+    }
 
     return packet_id;
 }
 
-void fm::save_packet(pack_info *packet, uint32_t active_timeout, uint32_t inactive_timeout)
+void fm::add_to_flow(pack_info *packet, uint32_t active_timeout, uint32_t inactive_timeout)
 {
     std::string pack_id = generate_packet_id(packet);
 
@@ -63,15 +69,19 @@ void fm::save_packet(pack_info *packet, uint32_t active_timeout, uint32_t inacti
 
 void fm::print_flows()
 {
-    std::cout << "------ [[ ACTIVE FLOWS ]] ------" << std::endl;
+    using namespace std;
+
+    cout << "------ [[ ACTIVE FLOWS ]] ------" << std::endl;
     for(auto& element: fm::active_flows)
     {
         element.second->print_flow();
     }
+    cout << endl;
 
-    std::cout << "------ [[ INACTIVE FLOWS ]] ------" << std::endl;
+    cout << "------ [[ INACTIVE FLOWS ]] ------" << std::endl;
     for(auto& element: fm::inactive_flows)
     {
         element->print_flow();
     }
+    cout << endl;
 }

@@ -2,6 +2,7 @@
 #define FLOW_MANAGER_HPP
 
 #include "flow.hpp"
+#include "debug-info.hpp"
 #include <unordered_map>
 #include <vector>
 
@@ -14,7 +15,7 @@ class FlowManager
     public:
         FlowManager();
         ~FlowManager();
-        void save_packet(pack_info *, uint32_t, uint32_t);
+        void add_to_flow(pack_info *, uint32_t, uint32_t);
         void print_flows();
 
     private:

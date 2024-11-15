@@ -22,10 +22,9 @@ class Flow
         uint32_t packet_cnt;
         uint32_t ip_octet_cnt;
         
-        // TODO might figure out that its uints later
-        int32_t first_packet_time;
+        int64_t first_packet_time;
         // when the last packed was recieved, for inactive timeout
-        int32_t last_packet_time;
+        int64_t last_packet_time;
 
         uint16_t src_port;
         uint16_t dst_port;
@@ -36,6 +35,7 @@ class Flow
 
     private:
         std::string flow_id;
+        bool debug;
     public:
         Flow(pack_info *);
         tm_status_t add_packet(pack_info *, uint32_t, uint32_t);
