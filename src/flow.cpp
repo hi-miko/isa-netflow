@@ -94,5 +94,5 @@ void Flow::print_flow()
     if (Flow::tcp_flags & TH_URG)  std::cout << "URG ";
     std::cout << std::endl;
 
-    std::cout << "\tip protocol: " << Flow::ip_proto_type << std::endl;
+    std::cout << "\tip protocol: " << std::hex << Flow::ip_proto_type << std::dec << std::endl;
 }

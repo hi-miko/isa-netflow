@@ -2,6 +2,7 @@
 // xuherp02
 
 // TODO get rid of pointless libraries
+#include <chrono>
 #include <cstdint>
 #include <iostream>
 #include <net/ethernet.h>
@@ -24,28 +25,28 @@ using namespace std;
 ClientArgs args = ClientArgs();
 FlowManager fm = FlowManager();
 
-// TODO scary function that can be changed
 int64_t time_handle(struct timeval ts)
 {
-    int64_t pckt_timestamp_ms = (ts.tv_sec * 1000 + ts.tv_usec / 1000);
+    int64_t pckt_timestamp_us = (ts.tv_sec * (1e6) + ts.tv_usec);
 
-    auto epoch_ms = chrono::duration_cast<chrono::milliseconds>(args.epoch).count();
+    auto epoch_us = chrono::duration_cast<chrono::microseconds>(args.epoch).count();
 
     if(debugActive)
     {
         cout << "[[ TIMESTAMPS ]]" << endl;
-        cout << "epoch: " << epoch_ms << "ms" << endl;
-        cout << "timestamp ms (nocutoff): " << (ts.tv_sec * 1000 + ts.tv_usec / 1000) << "ms" << endl;
-        cout << "packet timestamp: " << pckt_timestamp_ms << "ms" << endl;
+        cout << "epoch: " << epoch_us << "us" << endl;
+        cout << "timestamp us (nocutoff): " << (ts.tv_sec * (1e6) + ts.tv_usec) << "us" << endl;
+        cout << "packet timestamp: " << pckt_timestamp_us << "us" << endl;
         cout << endl;
     }
 
-    return pckt_timestamp_ms - epoch_ms;
+    return pckt_timestamp_us - epoch_us;
 }
 
 void print_raw_packet(pack_info *packet, const struct pcap_pkthdr *header)
 {
     static int packet_cnt = 1;
+    static int64_t ts_seq_check = 0;
 
     cout << "[[ PACKET INFO ]]" << endl;
 
@@ -53,7 +54,19 @@ void print_raw_packet(pack_info *packet, const struct pcap_pkthdr *header)
 
     cout << "\tSec: " << header->ts.tv_sec << "\n\tUsec: " << header->ts.tv_usec << endl;
     cout << "\tmiliseconds: " << (header->ts.tv_sec * 1000) + (header->ts.tv_usec / 1000) << "ms" << endl;
-    cout << "\trelative time: " << packet->relative_timestamp << "ms" << endl;
+    cout << "\trelative time: " << packet->relative_timestamp << "us" << endl;
+    // under normal circumstances should never be 0 normally, since for that to happen the packet would have
+    // to be captured, added to a pcap file and that pcap file read within 1 usec, which seems unlikely
+    if(ts_seq_check != 0)
+    {
+        if(abs(ts_seq_check) < abs(packet->relative_timestamp))
+        {
+            cout << "[Warning E35]: packet was recieved sooner than the previous one" << endl;
+        }
+    }
+
+    ts_seq_check = packet->relative_timestamp;
+
     cout << "\tIP packet size: " << packet->ip_octets << endl;
 
     packet_cnt++;
@@ -129,6 +142,7 @@ void pcap_reader(u_char *user, const struct pcap_pkthdr *header, const u_char *p
     pack_info packet;
 
     // timestamps don't have to be converted to host byte order
+    // relative time is in useconds here, but will need to be sent with mseconds
     packet.relative_timestamp = time_handle(header->ts);
     packet.ip_octets = ntohs(ip_hdr->ip_len);
 
@@ -145,7 +159,7 @@ void pcap_reader(u_char *user, const struct pcap_pkthdr *header, const u_char *p
 
     packet.tcp_flags = tcp_hdr->th_flags;
 
-    // fm.add_to_flow(&packet, args.active_timeout, args.inactive_timeout);
+    fm.add_to_flow(&packet, args.active_timeout, args.inactive_timeout);
 
 
     if(debugActive)
@@ -174,8 +188,8 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    // if(args.debug)
-    // {
-    //     fm.print_flows();
-    // }
+    if(debugActive)
+    {
+        fm.print_flows();
+    }
 }
