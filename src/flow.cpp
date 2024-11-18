@@ -36,6 +36,10 @@ Flow::Flow(pack_info *packet)
     Flow::flow_seq_num = ++(Flow::flow_seq_cnt);
 }
 
+/** A function to check the timeouts of a flow, this function is later used when trying
+*   to add packet info to a flow
+*   returns a timeout status enum type: active or inactive
+*/
 tm_status_t Flow::check_timeouts(pack_info *packet, uint32_t active_timeout, uint32_t inactive_timeout)
 {
     auto active_diff = labs(Flow::first_packet_time) - labs(Flow::last_packet_time);
@@ -49,8 +53,12 @@ tm_status_t Flow::check_timeouts(pack_info *packet, uint32_t active_timeout, uin
 
     if((active_diff / 1e6) >= static_cast<int64_t>(active_timeout))
     {
-        std::cout << "Flow should be inactivated due to active timeout" << std::endl;
-        return INACTIVE;
+        if(debugActive)
+        {
+            std::cout << "Flow should be inactivated due to active timeout" << std::endl;
+        }
+
+        return tm_status_t::INACTIVE;
     }
 
     auto inactive_diff = labs(Flow::last_packet_time) - labs(packet->relative_timestamp);
@@ -65,12 +73,19 @@ tm_status_t Flow::check_timeouts(pack_info *packet, uint32_t active_timeout, uin
 
     if((inactive_diff / 1e6) >= static_cast<int64_t>(inactive_timeout))
     {
-        std::cout << "Flow should be inactivated due to inactive timeout" << std::endl;
-        return INACTIVE;
+        if(debugActive)
+        {
+            std::cout << "Flow should be inactivated due to inactive timeout" << std::endl;
+        }
+
+        return tm_status_t::INACTIVE;
     }
+
     return tm_status_t::ACTIVE;
 }
 
+/** Adds packet information to a flow
+*/
 void Flow::add_packet(pack_info *packet)
 {
 
@@ -80,6 +95,8 @@ void Flow::add_packet(pack_info *packet)
     Flow::last_packet_time = packet->relative_timestamp;
 }
 
+/** Function used to print information of a flow, used for debugging
+*/
 void Flow::print_flow()
 {
 

@@ -22,15 +22,12 @@ fm::~FlowManager()
     }
 }
 
+/** Generates the packet id as described in flow-manager.hpp
+*/
 std::string fm::generate_packet_id(pack_info *packet)
 {
     std::string packet_id;
 
-    // TODO debug why the packet_id here is different from the
-    // one generated at Flow, use termdebug
-    // set br on this function and the one at flow
-    // other than that, fix the active/inactive times, cause
-    // I didn't change them when updating precision to usecs
     packet_id = std::to_string(packet->src_ip); 
     packet_id.append(std::to_string(packet->dst_ip));
     packet_id.append(std::to_string(packet->src_port));
@@ -46,6 +43,10 @@ std::string fm::generate_packet_id(pack_info *packet)
     return packet_id;
 }
 
+/** A function that checks if a flow already exists and if it does adds current packet information into it
+*   Active and Inactive timeouts are also checked and based on them instead of adding packet information to an existing 
+*   flow, it creates a new one
+*/
 void fm::add_to_flow(pack_info *packet, uint32_t active_timeout, uint32_t inactive_timeout)
 {
     std::string pack_id = fm::generate_packet_id(packet);
@@ -76,6 +77,8 @@ void fm::add_to_flow(pack_info *packet, uint32_t active_timeout, uint32_t inacti
     fm::active_flows[pack_id] = new_flow;
 }
 
+/** A simple function that prints all active and inactive flows, used for debugging
+*/
 void fm::print_flows()
 {
     using namespace std;

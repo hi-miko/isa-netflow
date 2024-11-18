@@ -41,8 +41,9 @@ void help_menu()
     std::cout << "\t<port> -> port of the netflow V5 collector" << std::endl;
 
     std::cout << "\nFlags:" << std::endl;
-    std::cout << "\t[--help] -> Displays this help message and exits" << std::endl;
-    std::cout << "\t[--version | -v] -> Displays the version of this program and exits" << std::endl;
+    std::cout << "\t[-h | --help] -> Displays this help message and exits" << std::endl;
+    std::cout << "\t[-d | --debug] -> Enables debugging (warning will print out a lot of text to standard output)" << std::endl;
+    std::cout << "\t[-v | --version] -> Displays the version of this program and exits" << std::endl;
     std::cout << "\t[-a | --active <active timeout>] -> number of seconds for the active timeout of the netflow V5 exporter (default 60 seconds)" << std::endl;
     std::cout << "\t[-i | --inactive <inactive timeout>] -> number of seconds for the inactive timeout of the netflow V5 exporter (default 60 seconds)" << std::endl;
 }
@@ -57,7 +58,6 @@ void ca::check_arg_number(std::string num, const char *arg_name)
 		{
             std::cout << "Error: " << arg_name <<" parameter expects only positive numbers" << std::endl;
             std::cerr << "see ./p2nprobe --help" << std::endl;
-            // TODO rethink exit(1)
 			exit(1);
 		}
 	}
@@ -88,12 +88,13 @@ void ca::valid_port(std::string port)
 
 	int new_port = stoi(port);
 
-    // TODO get default port
-    check_arg_range(128, 65535, new_port, "port");
+    check_arg_range(1, 65535, new_port, "port");
     
     ca::port = new_port;
 }
 
+/** A function that checks if the timeout is valid
+*/
 int32_t ca::valid_timeout(std::string timeout)
 {
     long temp_conv;
@@ -235,6 +236,8 @@ void ca::check_args(int argc, char **argv)
     }
 }
 
+/** A function that checks if the argument is a 'host:port' argument
+*/
 bool ca::is_host_and_port(std::string arg)
 {
     // looks through the string for the ':' character
@@ -246,6 +249,8 @@ bool ca::is_host_and_port(std::string arg)
     return true;
 }
 
+/** A function that prints the arguments, used for debugging
+*/
 void ca::print_args()
 {
     using namespace std;

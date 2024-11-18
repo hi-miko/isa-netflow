@@ -6,7 +6,7 @@ VPATH = src
 
 EXECUTABLE = p2nprobe
 
-SRC = p2nprobe.cpp client-args.cpp flow.cpp flow-manager.cpp debug-info.cpp
+SRC = p2nprobe.cpp client-args.cpp flow.cpp flow-manager.cpp debug-info.cpp packet-composer.cpp
 
 OBJECTS = $(SRC:.cpp=.o)
 

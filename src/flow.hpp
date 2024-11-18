@@ -13,6 +13,8 @@ enum tm_status_t
 class Flow
 {
     public:
+        int flow_seq_num;
+
         uint32_t src_ip;
         uint32_t dst_ip;
 
@@ -32,7 +34,6 @@ class Flow
     
     private:
         static int flow_seq_cnt;
-        int flow_seq_num;
     public:
         Flow(pack_info *);
         void add_packet(pack_info *);

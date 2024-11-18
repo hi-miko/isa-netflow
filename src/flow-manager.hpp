@@ -1,9 +1,11 @@
 #ifndef FLOW_MANAGER_HPP
 #define FLOW_MANAGER_HPP
 
-#include "flow.hpp"
 #include <unordered_map>
+#include <string>
 #include <vector>
+
+#include "flow.hpp"
 
 class FlowManager
 {
@@ -20,6 +22,7 @@ class FlowManager
     private:
         // string in the form of:
         // [src_ip][dst_ip][src_port][dst_port]
+        // protocol is ignored since we only export tcp packets
         std::string generate_packet_id(pack_info *);
 };
 

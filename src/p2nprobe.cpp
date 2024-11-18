@@ -1,28 +1,43 @@
 // Patrik Uher
 // xuherp02
 
-// TODO get rid of pointless libraries
-#include <chrono>
-#include <cstdint>
+#include <algorithm>
 #include <iostream>
-#include <net/ethernet.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
 #include <pcap/pcap.h>              // pcap functions
 #include <netinet/if_ether.h>       // ether_header struct
 #include <netinet/ip.h>             // ip struct
 #include <netinet/tcp.h>            // tcp struct
 #include <arpa/inet.h>              // inet functions
+#include <cstring>                  // memset
+#include <unistd.h>                 // fp close
 
 #include "client-args.hpp"
 #include "flow-manager.hpp"
+#include "packet-composer.hpp"
 #include "debug-info.hpp"
 
 using namespace std;
 
 ClientArgs args = ClientArgs();
 FlowManager fm = FlowManager();
+pcap_t *pcap_fp = nullptr;
+int sockfd = -1;
 
+// A function that is run before the program exits and is to ensure that socket and pcap_fp are closed
+void cleanup_program()
+{
+    if(sockfd != -1)
+    {
+        close(sockfd);
+    }
+
+    if(pcap_fp != nullptr)
+    {
+        pcap_close(pcap_fp);
+    }
+}
+
+// function that takes the time of the packet and creates relative time in microseconds out of it
 int64_t time_handle(struct timeval ts)
 {
     int64_t pckt_timestamp_us = (ts.tv_sec * (1e6) + ts.tv_usec);
@@ -41,6 +56,7 @@ int64_t time_handle(struct timeval ts)
     return pckt_timestamp_us - epoch_us;
 }
 
+// Prints every important detail of a packet
 void print_raw_packet(pack_info *packet, const struct pcap_pkthdr *header)
 {
     static int packet_cnt = 1;
@@ -72,10 +88,11 @@ void print_raw_packet(pack_info *packet, const struct pcap_pkthdr *header)
     char srcip[16];
     char dstip[16];
 
+    // inet_ntop automatically translates the ip addresses with ntohl,
+    // so thats why the ip addreses need to be translated back to network byte order
     uint32_t networkSaddr = htonl(packet->src_ip);
     uint32_t networkDaddr = htonl(packet->dst_ip);
 
-    // inet_ntop automatically translates the ip addresses with ntohl, so when saving do so too
     inet_ntop(AF_INET, &networkSaddr, srcip, sizeof(srcip));
     inet_ntop(AF_INET, &networkDaddr, dstip, sizeof(dstip));
 
@@ -96,6 +113,7 @@ void print_raw_packet(pack_info *packet, const struct pcap_pkthdr *header)
     cout << endl << endl;
 }
 
+// This function is run with the data of every packet in a pcap file
 void pcap_reader(u_char *user, const struct pcap_pkthdr *header, const u_char *packet_bytes)
 {
     (void)user; // gets rid of unused variable error
@@ -170,9 +188,14 @@ int main(int argc, char **argv)
 {
     args.check_args(argc, argv);
 
+    if (atexit(cleanup_program) != 0) {
+        cerr << "[Error]: Failed to set cleanup function" << endl;
+        // return 99 for a system error
+        return 99;
+    }
+
     char errbuf[PCAP_ERRBUF_SIZE];
-    // TODO try to create an errornious pcap file to see how my code would react, it should not segfault
-    pcap_t *pcap_fp = pcap_open_offline(args.pcap_file_path.c_str(), errbuf);
+    pcap_fp = pcap_open_offline(args.pcap_file_path.c_str(), errbuf);
 
     if (pcap_fp == NULL)
     {
@@ -191,6 +214,82 @@ int main(int argc, char **argv)
         fm.print_flows();
     }
 
-    // closes the pcap file pointer that was openned with pcap_open_offline
-    pcap_close(pcap_fp);
+    std::vector<Flow *>flow_buffer;
+
+    for(auto& element: fm.active_flows)
+    {
+        flow_buffer.push_back(element.second);
+    }
+
+    for(auto& element: fm.inactive_flows)
+    {
+        flow_buffer.push_back(element);
+    }
+
+    // sorts the flow buffer vector by using a lambda that sorts based on the flow_seq_num
+    std::sort(flow_buffer.begin(), flow_buffer.end(), [](Flow* a, Flow* b)
+    {
+        return a->flow_seq_num < b->flow_seq_num;
+    });
+
+    if(debugActive)
+    {
+        std::cout << " ------ [[ SORTED FLOWS ]] ------ " << std::endl << std::endl;
+
+        for(auto& element: flow_buffer)
+        {
+            element->print_flow();
+        }
+
+        std::cout << std::endl;
+    }
+    
+    PacketComposer pc = PacketComposer();
+    using packet_t = PacketComposer::packet_t;
+
+    packet_t packet;
+
+    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    if(sockfd == -1)
+    {
+        cerr << "Error: opening socket for sending" << endl;
+        exit(99);
+    }
+
+    struct sockaddr_in server_addr;
+    std::memset(&server_addr, 0, sizeof(server_addr));
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(args.port);
+    server_addr.sin_addr.s_addr = inet_addr(args.hostname.c_str());
+
+    std::vector<Flow *>sub_flow_buffer;
+    int total_flows = 0;
+
+    for(uint i = 0; i <= flow_buffer.size() / 30; i++)
+    {
+        for(int j = 0; j < 30; j++)
+        {
+            auto index = (i*30)+j; 
+            sub_flow_buffer.push_back(flow_buffer[index]);
+
+            if(flow_buffer[index] == flow_buffer.back())
+            {
+                break;
+            }
+        }
+
+        packet = pc.create_netflow_packet(args.epoch, total_flows, sub_flow_buffer);
+
+        auto bytes_sent = sendto(sockfd, packet, pc.packet_size, 0, reinterpret_cast<struct sockaddr*>(&server_addr), sizeof(server_addr));
+        if (bytes_sent < 0)
+        {
+            std::cerr << "[Error]: Packet failed to send" << std::endl;
+            return 99;
+        }
+
+        // reset
+        total_flows += sub_flow_buffer.size();
+        sub_flow_buffer.clear();
+        pc.clear_packet();
+    }
 }
