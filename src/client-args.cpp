@@ -221,7 +221,16 @@ void ca::check_args(int argc, char **argv)
     string port = host_and_port.substr(host_and_port.find(delimitor)+1, host_and_port.size());
 
     ca::pcap_file_path = pcap_file;
-    ca::hostname = hostname;
+
+    if(hostname == "localhost")
+    {
+        ca::hostname = "127.0.0.1";
+    }
+    else
+    {
+        ca::hostname = hostname;
+    }
+
     ca::valid_port(port);
     
     if(debugActive)
