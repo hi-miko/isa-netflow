@@ -1,3 +1,6 @@
+// Patrik Uher
+// xuherp02
+
 #ifndef PACK_INFO_HPP
 #define PACK_INFO_HPP
 

@@ -1,3 +1,6 @@
+// Patrik Uher
+// xuherp02
+
 #ifndef DEBUG_INFO_HPP
 #define DEBUG_INFO_HPP
 

@@ -1,3 +1,6 @@
+// Patrik Uher
+// xuherp02
+
 #include <iostream>
 #include "flow-manager.hpp"
 #include "debug-info.hpp"
@@ -32,6 +35,7 @@ std::string fm::generate_packet_id(pack_info *packet)
     packet_id.append(std::to_string(packet->dst_ip));
     packet_id.append(std::to_string(packet->src_port));
     packet_id.append(std::to_string(packet->dst_port));
+    packet_id.append(std::to_string(packet->ip_proto_type));
 
     if(debugActive)
     {

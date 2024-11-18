@@ -1,3 +1,6 @@
+// Patrik Uher
+// xuherp02
+
 #ifndef FLOW_MANAGER_HPP
 #define FLOW_MANAGER_HPP
 
@@ -21,7 +24,7 @@ class FlowManager
 
     private:
         // string in the form of:
-        // [src_ip][dst_ip][src_port][dst_port]
+        // [src_ip][dst_ip][src_port][dst_port][protocol_type]
         // protocol is ignored since we only export tcp packets
         std::string generate_packet_id(pack_info *);
 };

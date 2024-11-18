@@ -1,3 +1,6 @@
+// Patrik Uher
+// xuherp02
+
 #include "debug-info.hpp"
 
 // global variable for debugging
