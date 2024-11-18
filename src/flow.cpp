@@ -2,18 +2,26 @@
 #include <iostream>
 #include <netinet/ip.h>             // for IPPROTO_TCP macro
 #include <netinet/tcp.h>            // for TCP flag macros
-#include <string>
+#include <arpa/inet.h>              // inet functions
+
 #include "flow.hpp"
 #include "debug-info.hpp"
+#include "pack-info.hpp"
+
+// Global variable to count the sequence of flows
+int Flow::flow_seq_cnt = 0;
 
 Flow::Flow(pack_info *packet)
 {
     // all values are in host byte order, to print the ip addrs
     // first you must convert them to network byte order and
-    // then use the inet_ntop() function
+    // then use the inet_ntop() function or print it manually
 
     Flow::src_ip = packet->src_ip;
     Flow::dst_ip = packet->dst_ip;
+
+    Flow::src_port = packet->src_port;
+    Flow::dst_port = packet->dst_port;
 
     Flow::packet_cnt = 1;
     Flow::ip_octet_cnt = packet->ip_octets;
@@ -24,58 +32,70 @@ Flow::Flow(pack_info *packet)
     Flow::tcp_flags = packet->tcp_flags;
     Flow::ip_proto_type = IPPROTO_TCP;
 
-    Flow::generate_flow_id();
+    // flow seq numbers start with 1
+    Flow::flow_seq_num = ++(Flow::flow_seq_cnt);
 }
 
-void Flow::generate_flow_id()
+tm_status_t Flow::check_timeouts(pack_info *packet, uint32_t active_timeout, uint32_t inactive_timeout)
 {
-    Flow::flow_id = std::to_string(Flow::src_ip); 
-    Flow::flow_id.append(std::to_string(Flow::dst_ip));
-    Flow::flow_id.append(std::to_string(Flow::src_port));
-    Flow::flow_id.append(std::to_string(Flow::dst_port));
-
+    auto active_diff = labs(Flow::first_packet_time) - labs(Flow::last_packet_time);
+    
     if(debugActive)
     {
-        std::cout << "[[ FLOW DEBUG FLOW ID ]]" << std::endl;
-        std::cout << "flow id: " << Flow::flow_id << std::endl;
-        std::cout << std::endl;
+        std::cout << "[[ FLOW AC/INAC CHECK ]]" << std::endl;
+        std::cout << "active diff: " << active_diff << std::endl;
+        std::cout << "active tm comparison: " << (active_diff / 1e6) << " >= " << static_cast<int64_t>(active_timeout) << std::endl;
     }
-}
 
-tm_status_t Flow::add_packet(pack_info *packet, uint32_t active_timeout, uint32_t inactive_timeout)
-{
-    // TODO there might be some fuckery going on if the packets aren't ordered by timestamps, so that should be fixed (maybe order
-    // them myself if thats the case), or maybe do something like if the newest packet isn't newer than last packet and activeTM still
-    // is ok then don't set the newest packet as the last packet
-    // addendum: but after some testing this isn't the case and the packets are in sequential order, although I need to differentiate
-    // them by their uS and not by mS
-    auto active_diff = abs(Flow::first_packet_time) - abs(Flow::last_packet_time);
-    if((active_diff / 1000) >= static_cast<int32_t>(active_timeout))
+    if((active_diff / 1e6) >= static_cast<int64_t>(active_timeout))
     {
         std::cout << "Flow should be inactivated due to active timeout" << std::endl;
         return INACTIVE;
     }
 
-    auto inactive_diff = abs(Flow::last_packet_time) - abs(packet->relative_timestamp);
-    if((inactive_diff / 1000) >= static_cast<int32_t>(inactive_timeout))
+    auto inactive_diff = labs(Flow::last_packet_time) - labs(packet->relative_timestamp);
+
+    if(debugActive)
+    {
+        std::cout << "last packet: " << Flow::last_packet_time << " - relative_timestamp: " << packet->relative_timestamp << std::endl;
+        std::cout << "inactive diff: " << inactive_diff << std::endl;
+        std::cout << "inactive tm comparison: " << (inactive_diff / 1e6) << " >= " << static_cast<int64_t>(inactive_timeout) << std::endl;
+        std::cout << std::endl;
+    }
+
+    if((inactive_diff / 1e6) >= static_cast<int64_t>(inactive_timeout))
     {
         std::cout << "Flow should be inactivated due to inactive timeout" << std::endl;
         return INACTIVE;
     }
+    return tm_status_t::ACTIVE;
+}
+
+void Flow::add_packet(pack_info *packet)
+{
 
     Flow::tcp_flags = Flow::tcp_flags | packet->tcp_flags;
     Flow::packet_cnt += 1;
     Flow::ip_octet_cnt += packet->ip_octets;
     Flow::last_packet_time = packet->relative_timestamp;
-
-    return ACTIVE; 
 }
 
 void Flow::print_flow()
 {
-    std::cout << "flow:" << std::endl;
-    std::cout << "\tsource ip: " << Flow::src_ip << std::endl;
-    std::cout << "\tdestination ip: " << Flow::dst_ip << std::endl;
+
+    char srcip[16];
+    char dstip[16];
+
+    uint32_t networkSaddr = htonl(Flow::src_ip);
+    uint32_t networkDaddr = htonl(Flow::dst_ip);
+
+    inet_ntop(AF_INET, &networkSaddr, srcip, sizeof(srcip));
+    inet_ntop(AF_INET, &networkDaddr, dstip, sizeof(dstip));
+
+    std::cout << "flow [ " << Flow::flow_seq_num << " ]" << ":" << std::endl;
+    // std::cout << "flow:" << std::endl;
+    std::cout << "\tsource ip: " << srcip << std::endl;
+    std::cout << "\tdestination ip: " << dstip << std::endl;
     std::cout << "\tsource port: " << Flow::src_port << std::endl;
     std::cout << "\tdestination port: " << Flow::dst_port << std::endl;
 
@@ -94,5 +114,18 @@ void Flow::print_flow()
     if (Flow::tcp_flags & TH_URG)  std::cout << "URG ";
     std::cout << std::endl;
 
-    std::cout << "\tip protocol: " << std::hex << Flow::ip_proto_type << std::dec << std::endl;
+    // else and else if branches should not ever run,
+    // they are here for debug print testing
+    if(Flow::ip_proto_type == IPPROTO_TCP)
+    {
+        std::cout << "\tip protocol: TCP" << std::endl;
+    }
+    else if (Flow::ip_proto_type == IPPROTO_UDP)
+    {
+        std::cout << "\tip protocol: UDP" << std::endl;
+    }
+    else
+    {
+        std::cout << "\tip protocol: unknown" << std::endl;
+    }
 }

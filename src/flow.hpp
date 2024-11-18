@@ -2,7 +2,6 @@
 #define FLOW_HPP
 
 #include <cstdint>
-#include <string>
 #include "pack-info.hpp"
 
 enum tm_status_t 
@@ -14,8 +13,6 @@ enum tm_status_t
 class Flow
 {
     public:
-        // public var
-        // adresses are not converted to host since conversion is done automatically when they are printed thorough inet_ntop()
         uint32_t src_ip;
         uint32_t dst_ip;
 
@@ -32,17 +29,15 @@ class Flow
         // commulative OR of the TCP flags
         uint8_t tcp_flags;
         uint8_t ip_proto_type;
-
+    
     private:
-        std::string flow_id;
-        bool debug;
+        static int flow_seq_cnt;
+        int flow_seq_num;
     public:
         Flow(pack_info *);
-        tm_status_t add_packet(pack_info *, uint32_t, uint32_t);
+        void add_packet(pack_info *);
+        tm_status_t check_timeouts(pack_info *, uint32_t, uint32_t);
         void print_flow();
-    private:
-        void generate_flow_id();
-        std::string generate_packet_id(pack_info *);
 };
 
 #endif // FLOW_HPP

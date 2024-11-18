@@ -20,8 +20,6 @@
 
 using namespace std;
 
-// Global client args variable
-// TODO maybe rething globals in favor of facade class?
 ClientArgs args = ClientArgs();
 FlowManager fm = FlowManager();
 
@@ -192,4 +190,7 @@ int main(int argc, char **argv)
     {
         fm.print_flows();
     }
+
+    // closes the pcap file pointer that was openned with pcap_open_offline
+    pcap_close(pcap_fp);
 }
