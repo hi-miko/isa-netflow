@@ -56,7 +56,7 @@ void ca::check_arg_number(std::string num, const char *arg_name)
 	{
 		if(!isdigit(num[i]))
 		{
-            std::cout << "Error: " << arg_name <<" parameter expects only positive numbers" << std::endl;
+            std::cerr << "Error: " << arg_name <<" parameter expects only positive numbers" << std::endl;
             std::cerr << "see ./p2nprobe --help" << std::endl;
 			exit(1);
 		}
@@ -69,7 +69,7 @@ void ca::check_arg_range(int l_bound, int u_bound, int num, const char *arg_name
 {
 	if(num < l_bound or num > u_bound)
 	{
-        std::cout << "Error: argument: " << arg_name << " has to be in range <" << l_bound << ", " << u_bound <<">" << std::endl;
+        std::cerr << "Error: argument: " << arg_name << " has to be in range <" << l_bound << ", " << u_bound <<">" << std::endl;
 		exit(1);
 	}
 }
@@ -111,11 +111,11 @@ int32_t ca::valid_timeout(std::string timeout)
     {
         if(strcmp(e.what(), "stol") == 0)
         {
-            std::cout << "Argument out of range of 32 signed bits" << std::endl;
+            std::cerr << "Error: Argument out of range of 32 signed bits" << std::endl;
         }
         else
         {
-            std::cout << "Error: " << e.what() << std::endl;
+            std::cerr << "Error: " << e.what() << std::endl;
         }
 
         exit(1);
