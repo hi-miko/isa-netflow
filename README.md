@@ -44,7 +44,7 @@ textu na standardní výstup).
 
 Program se chová jako exportér pro netflow v5 collector. Program čte packety a jejich obsah z pcap souboru a ty dále agreguje do toků.
 Toky jsou agregovány podle jejich `source ip`, `destination ip`, `source port`, `destination port` a `ip protocol type`. Program je omezený
-na agregaci TCP packetů a ostatný ignoruje. Program používá aktivní a neaktivní čas pro funkcionalitu expirace toků. Pokud tok je buď už
+na agregaci TCP packetů a ostatní ignoruje. Program používá aktivní a neaktivní čas pro funkcionalitu expirace toků. Pokud tok je buď už
 dlouho neaktivní a nebo pokud je tok už dlouho aktivní, tak tento tok se ukončí a další packety co by se do tohoto toku agregovaly, tak
 jsou agregovány do nového toku. Podle specifikace zadání a netflow v5 pracuje program s relativním časem. Jako přesnost se v programu
 používají microsekundy, které se, při odesílání netflow packetu na netflow collector, přetypují na milisekundy (dle specifikace netflow v5).
