@@ -1,0 +1,679 @@
+[[ RAW ARGUMENT PRINT ]]
+argv[ 0 ]: ./p2nprobe
+argv[ 1 ]: --debug
+argv[ 2 ]: localhost:5565
+argv[ 3 ]: ./pcaps/500packets-notcp.pcap
+
+[[ CLIENT ARGUMENTS ]]
+hostname: 127.0.0.1
+pcap file path: ./pcaps/500packets-notcp.pcap
+port: 5565
+active timeout: 60
+inactive timeout: 60
+
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[[ TIMESTAMPS ]]
+epoch: 1732742873596764us
+timestamp us (nocutoff): 1.72877e+15us
+packet timestamp: 1728773653964095us
+
+[[ FLOW MANAGER PACKET ID ]]
+packet id: 23542131452481308905443402726
+
+[[ PACKET INFO ]]
+Packet number: 1
+	Sec: 1728773653
+	Usec: 964095
+	miliseconds: 1728773653964ms
+	relative time: -3969219632669us
+	IP packet size: 78
+	src ip: 140.82.113.25
+	dst ip: 147.229.196.233
+	src port: 443
+	dst port: 40272
+	TCP flags: PSH ACK 
+
+[[ TIMESTAMPS ]]
+epoch: 1732742873596764us
+timestamp us (nocutoff): 1.72877e+15us
+packet timestamp: 1728773653964389us
+
+[[ FLOW MANAGER PACKET ID ]]
+packet id: 24813089052354213145402724436
+
+[[ PACKET INFO ]]
+Packet number: 2
+	Sec: 1728773653
+	Usec: 964389
+	miliseconds: 1728773653964ms
+	relative time: -3969219632375us
+	IP packet size: 82
+	src ip: 147.229.196.233
+	dst ip: 140.82.113.25
+	src port: 40272
+	dst port: 443
+	TCP flags: PSH ACK 
+
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[[ TIMESTAMPS ]]
+epoch: 1732742873596764us
+timestamp us (nocutoff): 1.72877e+15us
+packet timestamp: 1728773654058398us
+
+[[ FLOW MANAGER PACKET ID ]]
+packet id: 23542131452481308905443402726
+
+[[ FLOW AC/INAC CHECK ]]
+active diff: 0
+active tm comparison: 0 >= 60
+last packet: -3969219632669 - relative_timestamp: -3969219538366
+inactive diff: 94303
+inactive tm comparison: 0.094303 >= 60
+
+[[ PACKET INFO ]]
+Packet number: 3
+	Sec: 1728773654
+	Usec: 58398
+	miliseconds: 1728773654058ms
+	relative time: -3969219538366us
+	IP packet size: 52
+	src ip: 140.82.113.25
+	dst ip: 147.229.196.233
+	src port: 443
+	dst port: 40272
+	TCP flags: ACK 
+
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x9003'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x9003'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x57'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[[ TIMESTAMPS ]]
+epoch: 1732742873596764us
+timestamp us (nocutoff): 1.72877e+15us
+packet timestamp: 1728773665784172us
+
+[[ FLOW MANAGER PACKET ID ]]
+packet id: 324871716924813089054250623806
+
+[[ PACKET INFO ]]
+Packet number: 4
+	Sec: 1728773665
+	Usec: 784172
+	miliseconds: 1728773665784ms
+	relative time: -3969207812592us
+	IP packet size: 44
+	src ip: 193.163.125.113
+	dst ip: 147.229.196.233
+	src port: 42506
+	dst port: 2380
+	TCP flags: SYN 
+
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x9003'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x88cc'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x86dd'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, not TCP
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+[Warning]: Dropped packet, expecting IP (0x800), got '0x806'
+------ [[ ACTIVE FLOWS ]] ------
+flow [ 3 ]:
+	source ip: 193.163.125.113
+	destination ip: 147.229.196.233
+	source port: 42506
+	destination port: 2380
+	packet count: 1
+	ip octet count: 44
+	first time: -3969207812592
+	last time: -3969207812592
+	TCP flags: SYN 
+	ip protocol: TCP
+flow [ 2 ]:
+	source ip: 147.229.196.233
+	destination ip: 140.82.113.25
+	source port: 40272
+	destination port: 443
+	packet count: 1
+	ip octet count: 82
+	first time: -3969219632375
+	last time: -3969219632375
+	TCP flags: PSH ACK 
+	ip protocol: TCP
+flow [ 1 ]:
+	source ip: 140.82.113.25
+	destination ip: 147.229.196.233
+	source port: 443
+	destination port: 40272
+	packet count: 2
+	ip octet count: 130
+	first time: -3969219632669
+	last time: -3969219538366
+	TCP flags: PSH ACK 
+	ip protocol: TCP
+
+------ [[ INACTIVE FLOWS ]] ------
+
+ ------ [[ SORTED FLOWS ]] ------ 
+
+flow [ 1 ]:
+	source ip: 140.82.113.25
+	destination ip: 147.229.196.233
+	source port: 443
+	destination port: 40272
+	packet count: 2
+	ip octet count: 130
+	first time: -3969219632669
+	last time: -3969219538366
+	TCP flags: PSH ACK 
+	ip protocol: TCP
+flow [ 2 ]:
+	source ip: 147.229.196.233
+	destination ip: 140.82.113.25
+	source port: 40272
+	destination port: 443
+	packet count: 1
+	ip octet count: 82
+	first time: -3969219632375
+	last time: -3969219632375
+	TCP flags: PSH ACK 
+	ip protocol: TCP
+flow [ 3 ]:
+	source ip: 193.163.125.113
+	destination ip: 147.229.196.233
+	source port: 42506
+	destination port: 2380
+	packet count: 1
+	ip octet count: 44
+	first time: -3969207812592
+	last time: -3969207812592
+	TCP flags: SYN 
+	ip protocol: TCP
+
+[[ PACKET CREATION INFO ]] 
+
+	bytes: 168
+	member count: 69
+	free space: 0
+
