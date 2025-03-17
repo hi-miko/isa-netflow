@@ -45,7 +45,7 @@ void pc::allocate_packet(size_t size)
 {
 	if(pc::packet != nullptr)
 	{
-        cout << "Error: Packet already initialized" << endl;
+        cerr << "Error: Packet already initialized" << endl;
 		exit(1);
 	}
 	try
@@ -55,7 +55,7 @@ void pc::allocate_packet(size_t size)
 	}
 	catch (exception& e)
 	{
-        cout << "Error: " << e.what() << endl;
+        cerr << "Error: " << e.what() << endl;
 		exit(99);
 	}
 
@@ -70,13 +70,13 @@ void pc::packet_add_uint8(uint8_t number)
 {
 	if(pc::packet == nullptr)
 	{
-		cout << "Error: Packet is not initialized!" << endl;
+		cerr << "Error: Packet is not initialized!" << endl;
 		exit(1);
 	}
 	
 	if(pc::packet_free_bytes < sizeof(number))
 	{
-		cout << "Error: Trying to copy to out of bounds!" << endl;
+		cerr << "Error: Trying to copy to out of bounds!" << endl;
 		exit(1);
 	}
 	
@@ -86,7 +86,7 @@ void pc::packet_add_uint8(uint8_t number)
 	auto ret = memcpy(reinterpret_cast<void *>(pc::packet_end), reinterpret_cast<void *>(&h_number), sizeof(h_number));
     if(ret == nullptr)
     {
-        cout << "Error: memcpy failed to copy to packet" << endl;
+        cerr << "Error: memcpy failed to copy to packet" << endl;
 		exit(99);
     }
 
@@ -101,13 +101,13 @@ void pc::packet_add_uint16(uint16_t number)
 {
 	if(pc::packet == nullptr)
 	{
-		cout << "Error: Packet is not initialized!" << endl;
+		cerr << "Error: Packet is not initialized!" << endl;
 		exit(1);
 	}
 	
 	if(pc::packet_free_bytes < sizeof(number))
 	{
-		cout << "Error: Trying to copy to out of bounds!" << endl;
+		cerr << "Error: Trying to copy to out of bounds!" << endl;
 		exit(1);
 	}
 	
@@ -116,7 +116,7 @@ void pc::packet_add_uint16(uint16_t number)
 	auto ret = memcpy(reinterpret_cast<void *>(pc::packet_end), reinterpret_cast<void *>(&h_number), sizeof(h_number));
     if(ret == nullptr)
     {
-        cout << "Error: memcpy failed to copy to packet" << endl;
+        cerr << "Error: memcpy failed to copy to packet" << endl;
 		exit(99);
     }
 
@@ -131,13 +131,13 @@ void pc::packet_add_uint32(uint32_t number)
 {
 	if(pc::packet == nullptr)
 	{
-		cout << "Error: Packet is not initialized!" << endl;
+		cerr << "Error: Packet is not initialized!" << endl;
 		exit(1);
 	}
 	
 	if(pc::packet_free_bytes < sizeof(number))
 	{
-		cout << "Error: Trying to copy to out of bounds!" << endl;
+		cerr << "Error: Trying to copy to out of bounds!" << endl;
 		exit(1);
 	}
 	
@@ -146,7 +146,7 @@ void pc::packet_add_uint32(uint32_t number)
 	auto ret = memcpy(reinterpret_cast<void *>(pc::packet_end), reinterpret_cast<void *>(&h_number), sizeof(h_number));
     if(ret == nullptr)
     {
-        cout << "Error: memcpy failed to copy to packet" << endl;
+        cerr << "Error: memcpy failed to copy to packet" << endl;
 		exit(99);
     }
 
